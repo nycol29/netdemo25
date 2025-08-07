@@ -1,0 +1,53 @@
+﻿@model netdemo.Models.Jugador
+
+@{
+    ViewData["Title"] = "Registro LoL";
+}
+
+<div class="formulario-centro">
+    <form asp-action="Index" method="post" class="border p-4 rounded bg-light shadow" style="width: 100%; max-width: 500px;">
+        <h2 class="text-center mb-4">Registro de Jugador de LoL</h2>
+
+        <div class="mb-3">
+            <label>Nombre:</label>
+            <input asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label>Edad:</label>
+            <input asp-for="Edad" type="number" class="form-control" />
+            <span asp-validation-for="Edad" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label>Frecuencia de juego:</label>
+            <select asp-for="FrecuenciaJuego" class="form-select">
+                <option value="">-- Selecciona --</option>
+                <option>Diario</option>
+                <option>Semanal</option>
+                <option>Mensual</option>
+            </select>
+            <span asp-validation-for="FrecuenciaJuego" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label>Años de juego:</label>
+            <input asp-for="AniosJugando" type="number" class="form-control" />
+            <span asp-validation-for="AniosJugando" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Enviar</button>
+
+        @if (ViewBag.Mensaje != null)
+        {
+            <div class="alert alert-success mt-3 text-center">
+                <strong>@ViewBag.Mensaje</strong>
+            </div>
+        }
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
