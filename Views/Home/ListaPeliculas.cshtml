@@ -1,0 +1,14 @@
+@model List<netdemo.Models.Pelicula>
+@{
+    ViewData["Title"] = "Películas de la categoría " + ViewBag.Categoria;
+}
+<h2>@ViewData["Title"]</h2>
+
+<ul>
+@foreach (var p in Model)
+{
+    <li>@p.Titulo (@p.Anio) — Dirigida por @p.Director</li>
+}
+</ul>
+
+<a asp-action="Index">Volver a categorías</a>

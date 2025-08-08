@@ -1,0 +1,35 @@
+@model netdemo.Models.Deseada
+@{
+    ViewData["Title"] = "Sugerir Película";
+}
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Crear" method="post">
+    <div>
+        <label asp-for="Titulo"></label>
+        <input asp-for="Titulo" />
+        <span asp-validation-for="Titulo"></span>
+    </div>
+    <div>
+        <label asp-for="Director"></label>
+        <input asp-for="Director" />
+        <span asp-validation-for="Director"></span>
+    </div>
+    <div>
+        <label asp-for="Año"></label>
+        <input asp-for="Año" type="number" />
+        <span asp-validation-for="Año"></span>
+    </div>
+    <div>
+        <label asp-for="Categoria"></label>
+        <select asp-for="Categoria" asp-items="@(new SelectList(ViewBag.Categorias))">
+            <option value="">-- Selecciona una categoría --</option>
+        </select>
+        <span asp-validation-for="Categoria"></span>
+    </div>
+    <button type="submit">Enviar sugerencia</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

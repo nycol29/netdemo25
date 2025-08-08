@@ -1,44 +1,58 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using netdemo.Models;
 
-namespace netdemo.Controllers;
-
-public class HomeController : Controller
+namespace netdemo.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
-
-    
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    
-    [HttpPost]
-    public IActionResult Index(Jugador jugador)
-    {
-        if (ModelState.IsValid)
+        private static readonly Dictionary<string, List<Pelicula>> _peliculasPorCategoria = new()
         {
-            ViewBag.Mensaje = $"GRACIAS \"{jugador.Nombre.ToUpper()}\" POR HABERTE REGISTRADO A NUESTRO JUEGO DE LOL";
+            ["Acción"] = new List<Pelicula>
+            {
+                new() { Titulo = "Jurassic World: El renacer", Director = "Gareth Edwards", Anio = 2025 },
+                new() { Titulo = "Night Carnage", Director = "Thomas J. Churchill", Anio = 2025 },
+                new() { Titulo = "Superman", Director = "Thomas Ubiedal", Anio = 2025 },
+            },
+            ["Drama"] = new List<Pelicula>
+            {
+                new() { Titulo = "Karate Kid: Legends", Director = "Jonathan Entwistle", Anio = 2025 },
+                new() { Titulo = "Mi año en Oxford", Director = "Iain Morris", Anio = 2025},
+            },
+            ["Terror"] = new List<Pelicula>
+            {
+                new() { Titulo = "Hook", Director = "Andrea M. Catinella", Anio = 2025 },
+                new() { Titulo = "Together", Director = "Michael Shanks", Anio = 2025 },
+            }
+        };
+
+        public IActionResult Index()
+        {
+            var categorias = _peliculasPorCategoria.Keys.ToList();
+            return View(categorias);
         }
 
-        return View(jugador);
-    }
+        public IActionResult ListaPeliculas(string categoria)
+        {
+            if (string.IsNullOrEmpty(categoria) || !_peliculasPorCategoria.ContainsKey(categoria))
+                return NotFound();
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+            var peliculas = _peliculasPorCategoria[categoria];
+            ViewBag.Categoria = categoria;
+            return View(peliculas);
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public static void AgregarPelicula(Deseada sugerencia)
+        {
+            var nueva = new Pelicula
+            {
+                Titulo = sugerencia.Titulo,
+                Director = sugerencia.Director,
+                Anio = sugerencia.Año,
+                Categoria = sugerencia.Categoria
+            };
+
+            if (_peliculasPorCategoria.ContainsKey(sugerencia.Categoria))
+                _peliculasPorCategoria[sugerencia.Categoria].Add(nueva);
+        }
     }
 }
