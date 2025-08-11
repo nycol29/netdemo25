@@ -1,0 +1,61 @@
+@model List<netdemo.Models.Producto>
+
+@{
+    ViewData["Title"] = "Registrar Producto";
+}
+
+<h1>Registro de Productos</h1>
+
+<!-- Formulario para crear un nuevo producto -->
+<form asp-action="Crear" asp-controller="Producto" method="post">
+    <div>
+        <label for="Nombre">Nombre:</label>
+        <input type="text" id="Nombre" name="Nombre" required />
+    </div>
+
+    <div>
+        <label for="Precio">Precio:</label>
+        <input type="number" id="Precio" name="Precio" required />
+    </div>
+    <div>
+        <label for="Descripcion">Descripción:</label>
+        <input type="text" id="Descripcion" name="Descripcion" required />
+    </div>
+
+
+    <button type="submit">Registrar</button>
+</form>
+
+<hr />
+
+<!-- Lista de productos -->
+<h2>Lista de Productos</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var producto in Model)
+        {
+            <tr>
+                <td>@producto.Id</td>
+                <td>@producto.Nombre</td>
+                <td>@producto.Precio</td>
+                <td>@producto.Descripcion</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No hay productos registrados.</p>
+}

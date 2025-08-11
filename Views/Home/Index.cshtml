@@ -1,18 +1,5 @@
-﻿@model List<string>
-
-<h2>Categorías de Películas</h2>
-<ul>
-@foreach (var categoria in Model)
-{
-    <li>
-        <a asp-controller="Home" asp-action="ListaPeliculas" asp-route-categoria="@categoria">
-            @categoria
-        </a>
-    </li>
+﻿@{
+    ViewData["Title"] = "Inicio";
 }
-</ul>
 
-<p>
-    ¿Deseas sugerir una nueva película? 
-    <a asp-controller="Deseadas" asp-action="Crear">Haz clic aquí</a>.
-</p>
+<h1>@ViewBag.Mensaje</h1>

@@ -1,0 +1,40 @@
+@model List<netdemo.Models.Mascota>
+
+<h1>Registro de Mascotas</h1>
+
+<form method="post">
+    <label>Nombre:</label>
+    <input type="text" name="Nombre" required />
+    <br />
+
+    <label>Especie</label>
+    <input type="text" name="Especie" required />
+    <br />
+
+    <label>Edad:</label>
+    <input type="number" name="Edad" required />
+    <br />
+
+    <button type="submit">Registrar</button>
+</form>
+
+<hr />
+
+<h2>Lista de Mascotas Registradas</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Especie</th>
+        <th>Edad</th>
+    </tr>
+    @foreach (var mascota in Model)
+    {
+        <tr>
+            <td>@mascota.Id</td>
+            <td>@mascota.Nombre</td>
+            <td>@mascota.Especie</td>
+            <td>@mascota.Edad</td>
+        </tr>
+    }
+</table>
